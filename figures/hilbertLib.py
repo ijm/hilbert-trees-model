@@ -121,7 +121,7 @@ def hilbertParity(I) :
     I = I ^ (I>>4);
     I = I ^ (I>>8);
     I = I ^ (I>>16);
-    I = (I ^ I>>32);
+    I = I ^ (I>>32);
     return  I & 1;
 
 
@@ -140,7 +140,7 @@ def hilbertDir(i, n, di) :
     I = int( i * ( 1<<(2*n) ) ) +1 + di
 
     p = hilbertParity(I)  # 0 -> (dx+dy)==-1 ; 1 -> (dx+dy)==+1
-    m = hilbertParity((-I) & 0xffffffffffffffff) # 0 -> (dx-dy)==-1 ; 1 -> (dx-dy)==+1
+    m = hilbertParity(-I) # 0 -> (dx-dy)==-1 ; 1 -> (dx-dy)==+1
 
     d =  p ^ (m<<1)
 
