@@ -30,4 +30,4 @@ figure3.pdf figure3.svg : $(FIGUREFILES)
 	$(PYTHON) figure.py -o $(basename $@) -p \
 		'-n 5 -c "-0.21875, 0.15625, 0.5" "0.34375, 0.46875, 0.375"  "0.03125, -0.46875, 0.375"' \
 		'-n 7 -c "-0.21875, 0.15625, 0.5" "0.34375, 0.46875, 0.375"  "0.03125, -0.46875, 0.375"' \
-	 	-cap 'Figure 3: Color coded Hilbert ranges after merging the list from the circular boundaries. Left: scale $$n = 5$$. Right: scale $$n = 7$$'
+	 	-cap 'Figure 3: Color coded Hilbert ranges after merging the list from the circular boundaries. Left: scale $$n=5$$. Right: scale $$n=7$$'
