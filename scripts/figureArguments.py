@@ -14,8 +14,9 @@ def doArgs():
     top = argparse.ArgumentParser(description="Plot hilbert")
     top.add_argument('-o', '--outname', dest='oname', required=True,
                      help='output file')
-    top.add_argument('-p', '--plot', dest='cmds', nargs='+', required=True,
-                     help='Sub options to plot')
+    top.add_argument('-p', '--plot', dest='cmds', nargs='+', required=True, action='append',
+                     help='Sub options to plot, one per line, space seperated per col')
+
     top.add_argument('-ph', '--plothelp', dest='cmdshelp',
                      help='Sub Commands to plot help')
     top.add_argument('-cap', '--caption', dest='caption', type=str,
@@ -24,6 +25,8 @@ def doArgs():
     cmds = argparse.ArgumentParser(description="Hilbert Plot Subplot options")
     cmds.add_argument('-n', '--depth', dest='n', type=int, required=True,
                       help='depth or hilbert scale')
+    cmds.add_argument('-m', '--depth2', dest='m', type=int, default=0,
+                      help='Second depth or hilbert scale')
     cmds.add_argument('-c', '--circles', dest='circs', nargs="*", type=ArgTuple(),
                       help='Circles to plot')
     cmds.add_argument('-hc', '--hilcolor', dest='hcol', type=str, default='grey',
@@ -34,6 +37,8 @@ def doArgs():
                       help="don't show hilbert curve")
     cmds.add_argument('-ncp', '--nocirclepoints', dest='noCircPoints', action='store_true',
                       help="don't show points on circle")
+    cmds.add_argument('-sp', '--showpoints', dest='showPoints', action='store_true',
+                      help="show offset points")
     cmds.add_argument('-sd', '--showdir', dest='showDir', action='store_true',
                       help="show direction indicators on curve")
     cmds.add_argument('-sc', '--showcrossings', dest='showCross', action='store_true',
@@ -42,14 +47,11 @@ def doArgs():
                       help="circle fill colour")
 
     args = top.parse_args()
-
+    print(f"{args.cmds=}")
     if args.cmdshelp:
         cmds.print_help()
 
-    for x in args.cmds:
-        print(split(x))
-
-    plots = [cmds.parse_args(split(x)) for x in args.cmds]
+    plots = [cmds.parse_args(split(cell)) for row in args.cmds for cell in row]
 
     return args, plots
 

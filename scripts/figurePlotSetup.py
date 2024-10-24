@@ -21,12 +21,7 @@ def savefig(fig, name):
     fig.savefig(name + ".svg", bbox_inches='tight')
 
 
-def hozSubPlots(N):
-    fig, ax = plt.subplots(1, N)
-
-    if N == 1:
-        ax = [ax]
-
-    return fig, ax
+def subplots(num_cols, num_rows):
+    return plt.subplots(num_rows, num_cols, squeeze=False)
 
 

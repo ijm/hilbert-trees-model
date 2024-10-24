@@ -5,7 +5,7 @@ from operator import itemgetter
 
 from figureArguments import doArgs
 from hilbertLib import i2xy, xy2i, hilbertDir
-from figurePlotSetup import hozSubPlots, savefig
+from figurePlotSetup import subplots, savefig
 
 circleColors = [
     (0.3, 0.3, 0.3, 1.0),
@@ -221,10 +221,15 @@ def main():
     args, plots = doArgs()
 
     N = len(plots)
-    fig, ax = hozSubPlots(N)
+    num_cols = max(len(x) for x in args.cmds)
+    num_rows = len(args.cmds)
 
-    for ax, p in zip(ax, plots):
-        doPlot(ax, p)
+    fig, axs = subplots(num_cols, num_rows)
+    flat_axs = [cell for row in axs for cell in row]
+
+    for i, (ax, opts) in enumerate(zip(flat_axs, plots)):
+        print(f"Plot {i}: {opts}")
+        doPlot(ax, opts)
 
     if args.caption:
         figtext(0.5, 0.05, args.caption, wrap=True,
